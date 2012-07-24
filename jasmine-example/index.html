@@ -1,0 +1,21 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+  <head>
+    <title>Jasmine Test Runner</title>
+    <link href='lib/jasmine-1.1.0/jasmine.css' rel='stylesheet' type='text/css' />
+    <script src='lib/jasmine-1.1.0/jasmine.js' type='text/javascript'></script>
+    <script src='lib/jasmine-1.1.0/jasmine-html.js' type='text/javascript'></script>
+
+    <!-- / include spec files here... -->
+    <script src='array.spec.js' type='text/javascript'></script>
+  </head>
+  <body>
+    <script type='text/javascript'>
+      //<![CDATA[
+        jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
+        jasmine.getEnv().execute();
+      //]]>
+    </script>
+  </body>
+  <div class='selector'></div>
+</html>

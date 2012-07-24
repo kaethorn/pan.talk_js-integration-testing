@@ -31,7 +31,7 @@
 # Motivation
 
  * Straumann Product Finder needs integration tests.
- * Frontend-only application, there's no logic that can be tested in a backend.
+ * Frontend-only application -> there's no logic that can be tested in a backend.
  * Jasmine/Mocha in the browser is limited to unit tests.
  * What about integration tests?
  * What about cross browser tests?
@@ -45,16 +45,29 @@
  * Runs in the browser
  * Easy to set up
  * Good or unit tests
+ * Cross browser capable
 
 ## Cons
 
  * Requires fixtures in order to test views
- * JS
- * No headless testing out of the box
+ * No JS or headless testing out of the box
 
-## Example
+---
 
-TODO
+# Jasmine example
+
+<pre class="coffee">
+describe 'Array', ->
+
+  describe '#indexOf()', ->
+
+    it 'should return -1 when the value is not present', ->
+
+      expect([1,2,3].indexOf(5)).toEqual -1
+      expect([1,2,3].indexOf(0)).toEqual -1
+</pre>
+
+[run](jasmine-example/index.html)
 
 ---
 
@@ -64,51 +77,61 @@ TODO
 
 # Last stop: WebDriver + Mocha
 
-Note: Can use a node jasmine wrapper instead of mocha
+Note: It's possible to use a node jasmine wrapper instead of mocha
 
 ## Pros
 
  * Runs in every browser that supplies a driver (IE8/9, FF, Chrome, Safari, Opera)
  * Headless (via onDemand)
  * Solid API
- * Mocha is feature rich
+ * Mocha is feature rich and fancy
 
 ## Cons
 
  * Slow
  * There's no modern or easy to use test suite similar to Casper.js
  * API methods are verbose
-
+ * Tests are fragile across browsers
 
 ---
 
-# TODO Mocha example
+# Mocha example with assert
 
-# TODO WebDriver Example
+<pre class="coffee">
+assert = require 'assert'
 
-# TODO combine them both
+describe 'array', ->
+
+  describe '#indexof()', ->
+
+    it 'should return -1 when the value is not present', ->
+
+      assert.equal -1, [1,2,3].indexof(5)
+      assert.equal -1, [1,2,3].indexof(0)
+</pre>
+
+# Mocha example with should.js
+
+<pre class="coffee">
+require 'should'
+
+describe 'array', ->
+
+  describe '#indexof()', ->
+
+    it 'should return -1 when the value is not present', ->
+
+      [1,2,3].indexof(5).should.equal -1
+      [1,2,3].indexof(0).should.equal -1
+</pre>
+
 ---
 
-# syntax highlighting
+# WebDriver Example
 
-* write your code in &lt;pre&gt; tags
-* annotate the given language using a css class
+---
 
-<pre>
-  &lt;pre class="syntax c"&gt;
-  static int foo;
-  void bar(void) {
-      foo = 0;
-      while (foo != 255) ; }
-  &lt;/pre&gt;
-</pre>
-
-<pre class="syntax c">
-static int foo;
-void bar(void) {
-    foo = 0;
-    while (foo != 255) ; }
-</pre>
+# WebDrive with Mocha Example
 
 </code>
 
