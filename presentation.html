@@ -56,7 +56,7 @@
 
 # Jasmine example
 
-<pre class="coffee">
+<pre class="syntax coffeescript">
 describe 'Array', ->
 
   describe '#indexOf()', ->
@@ -97,7 +97,7 @@ Note: It's possible to use a node jasmine wrapper instead of mocha
 
 # Mocha example with assert
 
-<pre class="coffee">
+<pre class="syntax coffeescript">
 assert = require 'assert'
 
 describe 'Array', ->
@@ -110,13 +110,13 @@ describe 'Array', ->
       assert.equal -1, [ 1, 2, 3 ].indexOf(0)
 </pre>
 
-<pre>
+<pre class="syntax bash">
 mocha -R spec --compilers coffee:coffee-script mocha-example/mocha-assert.coffee
 </pre>
 
 # Mocha example with should.js
 
-<pre class="coffee">
+<pre class="syntax coffeescript">
 require 'should'
 
 describe 'Array', ->
@@ -129,7 +129,7 @@ describe 'Array', ->
       [1,2,3].indexOf(0).should.equal -1
 </pre>
 
-<pre>
+<pre class="syntax bash">
 mocha -R spec --compilers coffee:coffee-script mocha-example/mocha-should.coffee
 </pre>
 
@@ -145,7 +145,7 @@ mocha -R spec --compilers coffee:coffee-script mocha-example/mocha-should.coffee
 
 ## Example
 
-<pre class="coffee">
+<pre class="syntax coffeescript">
 {wd,Wd} = require 'wd-sync'
 browser = wd.remote()
 
@@ -165,7 +165,7 @@ Wd with:browser, ->
   @quit()
 </pre>
 
-<pre>
+<pre class="syntax bash">
 mocha -R spec --compilers coffee:coffee-script webdriver-example/google.coffee
 mocha -R list --compilers coffee:coffee-script webdriver-example/google.coffee
 </pre>
@@ -177,7 +177,7 @@ mocha -R list --compilers coffee:coffee-script webdriver-example/google.coffee
 * Use the Selenium API from within a test framework
 * Allows using fancy assertion libraries (chai.js, should.js, ...)
 
-<pre class="coffee">
+<pre class="syntax coffeescript">
 should = require 'should'
 
 # Setup
@@ -238,7 +238,7 @@ describe 'Google', ->
   return
 </pre>
 
-<pre>
+<pre class="syntax bash">
 mocha -R spec --compilers coffee:coffee-script webdriver-mocha-example/google.coffee
 mocha -R list --compilers coffee:coffee-script webdriver-mocha-example/google.coffee
 </pre>
@@ -250,7 +250,7 @@ mocha -R list --compilers coffee:coffee-script webdriver-mocha-example/google.co
 * Requires some helpers and a wrapper (not displayed)
 * Requires an account on saucelabs.com
 
-<pre class="coffee">
+<pre class="syntax coffeescript">
 util = require './util'
 should = require 'should'
 {browser, WdWrap, profile} = util.WebDriverSetup()
@@ -304,12 +304,14 @@ describe 'Google', ->
   return
 </pre>
 
-<pre>
+Local, multiple browsers
+<pre class="syntax bash">
 cd webdriver-ondemand-example && ./run local ondemand.coffee
 </pre>
 
 
-<pre>
+Remote, IE8
+<pre class="syntax bash">
 cd webdriver-ondemand-example && ./run remote_ie8 ondemand.coffee
 </pre>
 
