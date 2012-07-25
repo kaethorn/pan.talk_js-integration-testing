@@ -1,0 +1,35 @@
+#!/usr/bin/env node
+
+var fs = require('fs');
+var spawn = require('child_process').spawn;
+
+// Determine profile
+var profile = process.argv[2];
+if(!profile) {
+  console.log('No profile specified, falling back to "local_chrome"');
+  profile = 'local_chrome';
+}
+
+// Set default options
+var args = [
+  '--reporter', 'spec',
+  '--compilers', 'coffee:coffee-script',
+  '--require', 'should',
+  '--ui', 'bdd'
+];
+
+// Append all spec files or the specified file
+var file = process.argv[3];
+if (file) {
+  args.push(file);
+} else {
+  fs.readdirSync('.').forEach(function(file) {
+    if (file.match(/.*.spec.coffee$/)) {
+      args.push(file);
+    }
+  });
+}
+
+// Create mocha as a child process
+var proc = spawn('_mocha', args, { env: { 'WD_PROFILE': profile }, customFds: [0,1,2] });
+proc.on('exit', process.exit);

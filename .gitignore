@@ -1,3 +1,4 @@
+webdriver-ondemand-example/profile.coffee
 lib-cov
 *.seed
 *.log
