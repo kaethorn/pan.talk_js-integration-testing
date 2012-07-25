@@ -71,7 +71,36 @@ describe 'Array', ->
 
 ---
 
-# Next stop: Casper.js
+# Next stop: CasperJS
+
+ * like Zombie.js, but without Node.js
+ * not simulated like Zombie.js
+ * based on PhantomJS, which is based on WebKit
+ 
+## Pros
+
+ * awesome api, awesome docs
+ * speaks CoffeeScript somewhat nativley
+
+## Cons
+
+ * WebKit only, no cross browser testing
+
+---
+
+# PhantomJS example: Taking a screenshot
+
+    // screenshot.js
+    var page = new WebPage();
+    page.open('http://panter.ch', function (status) {
+        page.render('panter.png');
+        phantom.exit();     
+    });
+    // % phantomjs screenshot.js
+
+---
+
+# CasperJS example
 
 ---
 
