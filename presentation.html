@@ -100,14 +100,18 @@ Note: It's possible to use a node jasmine wrapper instead of mocha
 <pre class="coffee">
 assert = require 'assert'
 
-describe 'array', ->
+describe 'Array', ->
 
   describe '#indexof()', ->
 
     it 'should return -1 when the value is not present', ->
 
-      assert.equal -1, [1,2,3].indexof(5)
-      assert.equal -1, [1,2,3].indexof(0)
+      assert.equal -1, [ 1, 2, 3 ].indexOf(5)
+      assert.equal -1, [ 1, 2, 3 ].indexOf(0)
+</pre>
+
+<pre>
+mocha -R spec --compilers coffee:coffee-script mocha-example/mocha-assert.coffee
 </pre>
 
 # Mocha example with should.js
@@ -115,23 +119,138 @@ describe 'array', ->
 <pre class="coffee">
 require 'should'
 
-describe 'array', ->
+describe 'Array', ->
 
   describe '#indexof()', ->
 
     it 'should return -1 when the value is not present', ->
 
-      [1,2,3].indexof(5).should.equal -1
-      [1,2,3].indexof(0).should.equal -1
+      [1,2,3].indexOf(5).should.equal -1
+      [1,2,3].indexOf(0).should.equal -1
+</pre>
+
+<pre>
+mocha -R spec --compilers coffee:coffee-script mocha-example/mocha-should.coffee
 </pre>
 
 ---
 
-# WebDriver Example
+# WebDriver node.js bindings
+
+* Provides a common API to browser functions
+* Bindings exist for most languages (Python, Ruby, node.js, C#, ..)
+* Doesn't provide assertions
+* Isn't a test framework
+* Pick a browser to run in
+
+## Example
+
+<pre class="coffee">
+{wd,Wd} = require 'wd-sync'
+browser = wd.remote()
+
+Wd with:browser, ->
+  @init browserName: 'firefox'
+
+  @get "http://google.com"
+
+  queryField = @elementByName 'q'
+  @type queryField, "Hello World"
+  @type queryField, "\n"
+
+  @setWaitTimeout 3000
+  @elementByCss '#ires'
+  console.log @title()
+
+  @quit()
+</pre>
+
+Run with
+<pre>
+mocha -R spec --compilers coffee:coffee-script webdriver-example/google.coffee
+mocha -R list --compilers coffee:coffee-script webdriver-example/google.coffee
+</pre>
 
 ---
 
-# WebDrive with Mocha Example
+# WebDriver with Mocha
+
+* Use the Selenium API from within a test framework
+* Allows using fancy assertion libraries (chai.js, should.js, ...)
+
+<pre class="coffee">
+should = require 'should'
+
+# Setup
+{wd,WdWrap}={}
+try
+  {wd,WdWrap} = require 'wd-sync'
+catch err
+  {wd,WdWrap} = require '../../index'
+
+browser = null
+WdWrap = WdWrap
+  with: ->
+    browser
+  pre: ->
+    @timeout 120000
+
+browser = wd.remote()
+
+describe 'Google', ->
+
+  before WdWrap ->
+    @init browserName: 'chrome'
+    @get 'http://google.com'
+    return
+
+  after WdWrap ->
+    @quit()
+    return
+
+  it 'has a query field', WdWrap ->
+    queryField = @elementByName 'q'
+    should.exist queryField
+    queryField.should.be.a 'object'
+    return
+
+  describe 'when entering a search term', ->
+
+    before WdWrap ->
+      queryField = @elementByName 'q'
+      @type queryField, 'Hello World'
+      @type queryField, '\n'
+      @setWaitTimeout 3000
+      @elementByCss '#ires'
+      return
+
+    it 'redirects to the search results', WdWrap ->
+      url = @url()
+      url.should.match /Hello\+World/
+      return
+
+    it 'offers search result', WdWrap ->
+      results = @elementsByCss '#ires li.g'
+      results.length.should.be.above 5
+      return
+
+    return
+
+  return
+</pre>
+
+Run with
+<pre>
+mocha -R spec --compilers coffee:coffee-script webdriver-mocha-example/google.coffee
+mocha -R list --compilers coffee:coffee-script webdriver-mocha-example/google.coffee
+</pre>
+
+---
+
+# WebDriver via onDemand
+
+<pre class="coffee">
+</pre>
 
 </code>
 
@@ -144,7 +263,7 @@ describe 'array', ->
   });
   $(".presentation").remove();
   w3c_slidy.add_listener(document.body, "touchend", w3c_slidy.mouse_button_click);
-  $.syntax(); 
+  $.syntax();
 </script>
 </body>
 </html>
